@@ -37,20 +37,20 @@ public class GeneralLoggingAspect {
 		logger.info("After method invoked : " + joinPoint.getSignature());
 	}
 
-	@Around("execution(* com.springbootapp.emlpoyee.service.*.*(..))")
-	public List<Employee> aroundAdvcice(ProceedingJoinPoint joinPoint) {
-		logger.info("Around Before method invoked : " + joinPoint.getSignature());
-		List<Employee> employees = null;
-		try {
-			employees = (List<Employee>) joinPoint.proceed();
-			logger.info("Response : " + employees.toString());
-		} catch (Throwable e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("Around After method invoked : " + joinPoint.getSignature());
-
-		return employees;
-	}
+//	@Around("execution(* com.springbootapp.emlpoyee.service.*.*(..))")
+//	public List<Employee> aroundAdvcice(ProceedingJoinPoint joinPoint) {
+//		logger.info("Around Before method invoked : " + joinPoint.getSignature());
+//		List<Employee> employees = null;
+//		try {
+//			employees = (List<Employee>) joinPoint.proceed();
+//			logger.info("Response : " + employees.toString());
+//		} catch (Throwable e) {
+//			logger.error(e.getMessage());
+//		}
+//		logger.info("Around After method invoked : " + joinPoint.getSignature());
+//
+//		return employees;
+//	}
 
 	@AfterReturning("loggingPointcut()")
 	public void afterReturning(JoinPoint joinPoint) {

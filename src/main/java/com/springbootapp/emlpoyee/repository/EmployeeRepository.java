@@ -3,6 +3,8 @@ package com.springbootapp.emlpoyee.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +16,7 @@ import com.springbootapp.emlpoyee.entity.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
-	List<Employee> findAll();
+	Page<Employee> findAll(Pageable pageable);
 	
 	Optional<Employee> findById(Long Id);
 	

@@ -6,6 +6,10 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springbootapp.emlpoyee.entity.Employee;
@@ -33,8 +37,7 @@ public class EmployeeService {
 	}
 
 	public Employee getEmployeeById(Long id) {
-		return employeeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFound("Employee", "Id", id));
+		return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Employee", "Id", id));
 	}
 
 	public List<Employee> getEmplyeesByFirstNameAndLastNameLike(String firstName, String lastName) {
@@ -56,13 +59,27 @@ public class EmployeeService {
 		existingEmployee.setJobTitle(employee.getJobTitle());
 		existingEmployee.setSalary(employee.getSalary());
 		existingEmployee.setDepartment(employee.getDepartment());
-		
+
 		return employeeRepository.save(existingEmployee);
 	}
 
 	public void deleteEmployee(Long id) {
-		employeeRepository.findById(id)
-		.orElseThrow(()->new ResourceNotFound("Employee", "Id", id));
+		employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Employee", "Id", id));
 		employeeRepository.deleteById(id);
+	}
+
+	public Page<Employee> findPaginated(int pageNo, int pageSize) {
+		Pageable emPageable = PageRequest.of(pageNo, pageSize);
+		return employeeRepository.findAll(emPageable);
+	}
+
+	public Page<Employee> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+		Pageable emPageable = null;
+		if (sortDirection.equalsIgnoreCase("asc")) {
+			emPageable = PageRequest.of(pageNo, pageSize).withSort(Sort.by(sortField).ascending());
+		} else {
+			emPageable = PageRequest.of(pageNo, pageSize).withSort(Sort.by(sortField).descending());
+		}
+		return employeeRepository.findAll(emPageable);
 	}
 }

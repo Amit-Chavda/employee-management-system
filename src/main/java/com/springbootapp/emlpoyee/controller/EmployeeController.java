@@ -3,6 +3,7 @@ package com.springbootapp.emlpoyee.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootapp.emlpoyee.entity.Employee;
@@ -26,6 +29,11 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+
+	@RequestMapping()
+	public String basePath() {
+		return "redirect:/Employees/page/1?sortBy=firstName&order=ASC";
+	}
 
 	@PostMapping("/Save")
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
@@ -66,7 +74,7 @@ public class EmployeeController {
 	@GetMapping("/DeleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable Long id) {
 		employeeService.deleteEmployee(id);
-		return "redirect:/Employees/GetEmployees";
+		return "redirect:/Employees";
 	}
 
 	@GetMapping("/CreateEmployeeForm")
@@ -79,7 +87,7 @@ public class EmployeeController {
 	@PostMapping("/SaveEmployee")
 	public String createEmployee(@ModelAttribute Employee employee) {
 		employeeService.save(employee);
-		return "redirect:/Employees/GetEmployees";
+		return "redirect:/Employees";
 	}
 
 	@GetMapping("/UpdateEmployeeForm/{id}")
@@ -101,6 +109,24 @@ public class EmployeeController {
 		existingEmployee.setSalary(employee.getSalary());
 
 		employeeService.save(existingEmployee);
-		return "redirect:/Employees/GetEmployees";
+		return "redirect:/Employees";
 	}
+
+	@GetMapping("/page/{pageNo}")
+	public String getSomeEmployees(Model model, @PathVariable int pageNo, @RequestParam("sortBy") String sortBy,
+			@RequestParam("order") String order) {
+		int pageSize = 10;
+		Page<Employee> page = employeeService.findPaginated(pageNo - 1, pageSize, sortBy, order);
+
+		model.addAttribute("employees", page.getContent());
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("currentPage", pageNo);
+		
+		model.addAttribute("sortBy", sortBy);
+		model.addAttribute("order", order);
+		model.addAttribute("reverseOrder", order.equalsIgnoreCase("asc") ? "desc" : "asc");
+		return "Employees";
+	}
+
 }
