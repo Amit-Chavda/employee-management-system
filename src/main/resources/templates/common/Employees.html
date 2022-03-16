@@ -17,7 +17,7 @@
 
 
 		<a th:href="@{/Employees/CreateEmployeeForm}" class="btn btn-primary mb-3">Add Employee</a>
-
+		<a th:href="@{/Logout}" class="btn btn-danger mb-3 float-sm-right">Logout</a>
 		<table class=" table table-striped table-bordered">
 			<thead class="table-dark">
 				<tr>
@@ -71,19 +71,20 @@
 				</div>
 				<div class="col-sm-2 h4">
 					<span th:each="i:${#numbers.sequence(1,totalPages)}">
-						<a th:if="${currentPage!=i}" th:href="@{'/Employees/page/' + (${i})+'?sortBy='+${sortBy} +'&order='+${order}}">[[${i}]]</a>
+						<a th:if="${currentPage!=i}" th:href="@{' /Employees/page/' + (${i})+'?sortBy='+${sortBy} +' &order='+${order}}">[[${i}]]</a>
 						<span th:unless="${currentPage !=i}">[[${i}]]</span>
 						</span>
 	</div>
 	
 	<div class="col-sm-1">
-		<a th:if="${currentPage<totalPages}" th:href="@{'/Employees/page/' + ${currentPage+1} +'?sortBy='+${sortBy} +'&order='+${order}}"
+		<a th:if="${currentPage<totalPages}" th:href="@{' /Employees/page/' + ${currentPage+1} +'?sortBy='+${sortBy} +'
+							&order='+${order}}"
 			class="btn btn-primary">Next</a>
 
-		<a th:if="${currentPage==totalPages}" th:href="@{'/Employees/page/1'+'?sortBy='+${sortBy} +'&order='+${order}}" class="btn btn-primary">First</a>
+		<a th:if="${currentPage==totalPages}" th:href="@{' /Employees/page/1'+'?sortBy='+${sortBy} +' &order='+${order}}" class="btn btn-primary">First</a>
 	</div>
 	<div class="col-sm-2">
-		<a th:if="${currentPage!=i}" th:href="@{'/Employees/page/' + (${totalPages})+'?sortBy='+${sortBy} +'&order='+${order}}" class="btn btn-primary">Last</a>
+		<a th:if="${currentPage!=i}" th:href="@{' /Employees/page/' + (${totalPages})+'?sortBy='+${sortBy} +' &order='+${order}}" class="btn btn-primary">Last</a>
 	</div>
 	</div>
 	</div>
