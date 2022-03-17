@@ -22,6 +22,10 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+<<<<<<< Updated upstream
+=======
+import com.springbootapp.emlpoyee.helper.CustomAccessDeniedHandler;
+>>>>>>> Stashed changes
 import com.springbootapp.emlpoyee.service.EmployeeDetailsService;
 
 @Configuration
@@ -62,7 +66,11 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter {
 				if(authentication.getAuthorities().toString().contains("ROLE_ADMIN")) {
 					redirectStrategy.sendRedirect(request, response,"Admin/");
 				}else {
+<<<<<<< Updated upstream
 					redirectStrategy.sendRedirect(request, response,"Employees/Home");
+=======
+					redirectStrategy.sendRedirect(request, response,"Employees/Home?email="+authentication.getName());
+>>>>>>> Stashed changes
 				}	
 			}
 		});
@@ -74,6 +82,12 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter {
 		.deleteCookies("JSESSIONID")
 		.invalidateHttpSession(true)
 		.logoutSuccessUrl("/");
+<<<<<<< Updated upstream
+=======
+	
+	http
+		.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+>>>>>>> Stashed changes
 	}
 
 	@Bean

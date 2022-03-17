@@ -39,6 +39,10 @@ public class EmployeeService {
 	public Employee getEmployeeById(Long id) {
 		return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Employee", "Id", id));
 	}
+	
+	public Employee getEmployeeByEmail(String email) {
+		return employeeRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("Employee", "Email", email));
+	}
 
 	public List<Employee> getEmplyeesByFirstNameAndLastNameLike(String firstName, String lastName) {
 		return employeeRepository.findByFirstNameAndLastNameContains(firstName, lastName);

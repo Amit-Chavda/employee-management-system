@@ -1,6 +1,11 @@
 package com.springbootapp.emlpoyee.controller;
 
 import java.util.List;
+<<<<<<< Updated upstream
+=======
+import java.util.Optional;
+
+>>>>>>> Stashed changes
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +37,7 @@ public class EmployeeController {
 	@RequestMapping()
 	public String basePath() {
 		return "index";
+<<<<<<< Updated upstream
 	}
 
 	/*
@@ -63,6 +69,44 @@ public class EmployeeController {
 	}
 
 	/*
+=======
+	}
+
+	/*
+	 * Common public pages
+	 */
+
+	@RequestMapping("AccessDenied")
+	public String accessDenied() {
+		return "common/AccessDenied";
+	}
+
+	@RequestMapping("Login")
+	public String employeeLogin(Model model) {
+		model.addAttribute("employee", new Employee());
+		return "common/Login";
+	}
+
+	@RequestMapping("/LoginError")
+	public String employeeLoginError(HttpServletRequest request, Model model) {
+		model.addAttribute("employee", new Employee());
+
+		HttpSession session = request.getSession(false);
+		String errorMessage = null;
+		if (session != null) {
+			AuthenticationException ex = (AuthenticationException) session
+					.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+			if (ex != null) {
+				errorMessage = ex.getMessage();
+			}
+		}
+		model.addAttribute("error", errorMessage);
+
+		return "common/Login";
+	}
+
+	/*
+>>>>>>> Stashed changes
 	 * Employee accessible pages
 	 */
 	@RequestMapping("Employees/Home")
@@ -166,8 +210,13 @@ public class EmployeeController {
 		model.addAttribute("sortBy", sortBy);
 		model.addAttribute("order", order);
 		model.addAttribute("reverseOrder", order.equalsIgnoreCase("asc") ? "desc" : "asc");
+<<<<<<< Updated upstream
 		model.addAttribute("welcomeMsg","You are logged in as Admin!" );
 		
+=======
+		model.addAttribute("welcomeMsg", "You are logged in as Admin!");
+
+>>>>>>> Stashed changes
 		return "admin/AdminHome";
 	}
 }
