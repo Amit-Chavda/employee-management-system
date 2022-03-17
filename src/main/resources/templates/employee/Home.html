@@ -17,11 +17,7 @@
 	<br>
 	<div class="container w-100">
 		<div class="container w-100 justify-content-center bg-dark text-white">
-<<<<<<< Updated upstream
-			<h3>Welcome home!</h3>
-=======
 			<h3>Welcome <span sec:authentication="name"></span>!</h3>
->>>>>>> Stashed changes
 			<form th:action="@{/logout}" method="POST">
 				<button class="btn btn-outline-danger my-2 mb-3 float-right" type="submit">Logout</button>
 			</form>
