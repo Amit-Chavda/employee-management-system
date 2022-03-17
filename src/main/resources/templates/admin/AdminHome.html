@@ -4,6 +4,7 @@
 	<title>Employee Management System</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
@@ -18,8 +19,11 @@
 
 
 
-
 	<br>
+	
+		<a th:href="@{/logout}" class="btn btn-danger mx-5 float-sm-right">Logout</a>
+  
+</div>
 	<div class="container">
 		<div class="row justify-content-center">
 			<h1>List Employees</h1>
@@ -27,7 +31,18 @@
 
 
 		<a th:href="@{/Admin/CreateEmployeeForm}" class="btn btn-primary mb-3">Add Employee</a>
-		<a th:href="@{/logout}" class="btn btn-danger mb-3 float-sm-right">Logout</a>
+		
+		
+		
+		
+			<form th:object="${keyword}" th:action=@{'/Admin/Search?keyword='+${keyword}} class="input-group mb-3 col-3 float-right">
+  				<input type="text" class="form-control" th:value="${keyword}" name="keyword" id="keyword" placeholder="Search" >
+  				<div class="input-group-append">
+    				<button class="btn btn btn-primary" >Search</button>
+  				</div>
+			</form>
+
+		
 		<table class=" table table-striped table-bordered">
 			<thead class="table-dark">
 				<tr>

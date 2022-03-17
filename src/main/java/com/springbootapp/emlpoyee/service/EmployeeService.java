@@ -39,14 +39,15 @@ public class EmployeeService {
 	public Employee getEmployeeById(Long id) {
 		return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Employee", "Id", id));
 	}
-	
+
 	public Employee getEmployeeByEmail(String email) {
-		return employeeRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFound("Employee", "Email", email));
+		return employeeRepository.findByEmail(email)
+				.orElseThrow(() -> new ResourceNotFound("Employee", "Email", email));
 	}
 
-	public List<Employee> getEmplyeesByFirstNameAndLastNameLike(String firstName, String lastName) {
-		return employeeRepository.findByFirstNameAndLastNameContains(firstName, lastName);
-	}
+//	public List<Employee> getEmplyeesByFirstNameAndLastNameLike(String firstName, String lastName) {
+//		return employeeRepository.findByFirstNameAndLastNameContains(firstName, lastName);
+//	}
 
 	public List<Employee> getEmployeesOrderByFirstName() {
 		return employeeRepository.findAllOrderByFirstName();
@@ -85,5 +86,10 @@ public class EmployeeService {
 			emPageable = PageRequest.of(pageNo, pageSize).withSort(Sort.by(sortField).descending());
 		}
 		return employeeRepository.findAll(emPageable);
+	}
+
+	public Page<Employee> searchEmployee(String keyword, int pageNo, int pageSize) {
+		Pageable emPageable = PageRequest.of(pageNo, pageSize);
+		return employeeRepository.search(keyword, emPageable);
 	}
 }

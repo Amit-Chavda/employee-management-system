@@ -117,7 +117,7 @@ public class EmployeeController {
 	@GetMapping("Admin/DeleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable Long id) {
 		employeeService.deleteEmployee(id);
-		return "redirect:/Admin/page/1?sortBy=firstName&order=ASC";
+		return "redirect:/Admin/page/1?sortBy=id&order=ASC";
 	}
 
 	@GetMapping("Admin/CreateEmployeeForm")
@@ -155,13 +155,27 @@ public class EmployeeController {
 		return "redirect:/Employees";
 	}
 
+	@GetMapping("Admin/Search")
+	public String search(Model model, @RequestParam String keyword) {
+		if (keyword.length() > 3) {
+			int pageSize = 10;
+			Page<Employee> page = employeeService.searchEmployee(keyword, 0, pageSize);
+			model.addAttribute("employees", page.getContent());
+			model.addAttribute("totalPages", page.getTotalPages());
+			model.addAttribute("totalItems", page.getTotalElements());
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("currentPage", 1);
+			return "admin/AdminHome";
+		}
+		return "redirect:/Admin/page/1?sortBy=id&order=ASC";
+	}
+
 	@GetMapping("Admin/page/{pageNo}")
 	public String getSomeEmployees(Model model, @PathVariable int pageNo, @RequestParam("sortBy") String sortBy,
-			@RequestParam("order") String order) {
+			@RequestParam("order") String order, @RequestParam(defaultValue = "", required = false) String keyword) {
 		int pageSize = 10;
 
 		sortBy = sortBy.trim();
-		System.out.println(sortBy);
 		Page<Employee> page = employeeService.findPaginated(pageNo - 1, pageSize, sortBy, order);
 
 		model.addAttribute("employees", page.getContent());
@@ -170,6 +184,7 @@ public class EmployeeController {
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("sortBy", sortBy);
 		model.addAttribute("order", order);
+		model.addAttribute("keyword", "");
 		model.addAttribute("reverseOrder", order.equalsIgnoreCase("asc") ? "desc" : "asc");
 		model.addAttribute("welcomeMsg", "You are logged in as Admin!");
 
