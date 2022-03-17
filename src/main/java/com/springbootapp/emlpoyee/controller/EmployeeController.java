@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,7 +91,7 @@ public class EmployeeController {
 
 	@GetMapping("Admin/")
 	public String admindashboard(Model model) {
-		return "redirect:/Admin/page/1?sortBy=firstName&order=ASC";
+		return "redirect:/Admin/page/1?sortBy=id&order=ASC";
 	}
 
 	@GetMapping("Admin/GetEmployees")
@@ -130,7 +131,7 @@ public class EmployeeController {
 	@PostMapping("Admin/SaveEmployee")
 	public String createEmployee(@ModelAttribute Employee employee) {
 		employeeService.save(employee);
-		return "redirect:/Employees";
+		return "redirect:/Admin/page/1?sortBy=id&order=ASC";
 	}
 
 	@GetMapping("Admin/UpdateEmployeeForm/{id}")
@@ -152,7 +153,7 @@ public class EmployeeController {
 		existingEmployee.setSalary(employee.getSalary());
 
 		employeeService.save(existingEmployee);
-		return "redirect:/Employees";
+		return "redirect:/Admin/page/1?sortBy=id&order=ASC";
 	}
 
 	@GetMapping("Admin/Search")

@@ -15,12 +15,11 @@
 
 		<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card bg-light">
 			<br>
-			<h1 class="text-center">Update Employee</h1>
+			<h1 class="text-center">Update Employee Details</h1>
 			<div class="card-body">
 
 
-				<form th:action="@{/Employees/UpdateEmployee/{id}(id=${employee.id})}" th:object="${employee}"
-					method="POST">
+				<form th:action="@{/Admin/UpdateEmployee/{id}(id=*{id})}" th:object="${employee}" method="POST">
 					<div class="form-group">
 						<label>First Name</label>
 						<input type="text" class="form-control" name=" firstName" th:field="*{firstName}"
@@ -36,9 +35,28 @@
 					</div>
 					<br>
 					<div class="form-group">
-						<label>Gnder</label>
-						<input type="text" class="form-control" name="gender" th:field="*{gender}"
+						<label>Gnder</label><br>
+						<!--<input type="text" class="form-control" name="gender" th:field="*{gender}"
 							placeholder="Enter gender" />
+							
+							-->
+
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" th:field="*{gender}" value="Male" id="male">
+							<label class="form-check-label" for="male">Male</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" th:field="*{gender}" value="Female"
+								id="female">
+							<label class="form-check-label" for="female">Female</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" th:field="*{gender}" value="Other" id="other">
+							<label class="form-check-label" for="other">Other</label>
+						</div>
+
+
 					</div>
 					<br>
 					<div class="form-group">
@@ -55,9 +73,19 @@
 					<br>
 					<div class="form-group">
 						<label>Department</label>
-						<input type="text" class="form-control" name="department" th:field="*{department}"
-							placeholder="Enter department" />
+
+						<select class="form-select form-select-md mb-2" aria-label=".form-select-lg example"
+							th:field="*{department}">
+							<option value="HR" selected>HR</option>
+							<option value="Backend">Backend</option>
+							<option value="Frontend">Frontend</option>
+							<option value="Cloud">Cloud</option>
+						</select>
+
+
+
 					</div>
+
 					<br>
 
 					<div class="form-group">
@@ -66,9 +94,31 @@
 							placeholder="Enter salary" />
 					</div>
 					<br>
+
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" th:field="*{password}"
+							placeholder="Enter password" />
+					</div>
+
+					<br>
+
+					<div class="form-group">
+						<label>Roles:</label>
+
+						<input type="checkbox" value="*{roles}"
+							th:checked="*{#strings.contains(roles,'ADMIN')}" />ADMIN&nbsp;
+						<input type="checkbox" value="*{roles}"
+							th:checked="*{#strings.contains(roles,'USER')}" />USER&nbsp;
+						<input type="checkbox" value="*{roles}"
+							th:checked="*{#strings.contains(roles,'EMPLOYEE')}" />EMPLOYEE&nbsp;
+
+					</div>
+
+					<br>
 					<div class="footer-body">
 						<button type="submit" class="btn btn-primary ">
-							Update
+							Submit
 						</button>
 					</div>
 				</form>

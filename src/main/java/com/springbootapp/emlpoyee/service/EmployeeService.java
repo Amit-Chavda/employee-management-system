@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.springbootapp.emlpoyee.entity.Employee;
@@ -25,6 +26,7 @@ public class EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	public Employee save(@NonNull Employee employee) {
+		employee.setPassword(new BCryptPasswordEncoder().encode(employee.getPassword()));
 		return employeeRepository.save(employee);
 	}
 

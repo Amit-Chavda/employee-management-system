@@ -21,7 +21,7 @@ public class EmployeeDetails implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		employee.getRolesList().forEach(s -> {
-			GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + s);
+			GrantedAuthority authority = new SimpleGrantedAuthority(s);
 			authorities.add(authority);
 		});
 		return authorities;
@@ -29,7 +29,7 @@ public class EmployeeDetails implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return new BCryptPasswordEncoder().encode(employee.getPassword());
+		return employee.getPassword();
 	}
 
 	@Override

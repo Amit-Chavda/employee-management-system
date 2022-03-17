@@ -35,7 +35,7 @@
 		
 		
 		
-			<form th:object="${keyword}" th:action=@{'/Admin/Search?keyword='+${keyword}} class="input-group mb-3 col-3 float-right">
+			<form th:object="${keyword}" th:action=@{'/Admin/Search?keyword='+${keyword}} class="input-group col-3 float-right">
   				<input type="text" class="form-control" th:value="${keyword}" name="keyword" id="keyword" placeholder="Search" >
   				<div class="input-group-append">
     				<button class="btn btn btn-primary" >Search</button>
@@ -66,7 +66,9 @@
 					Salary
 					</a>
 					</th>
+					<th>Roles</th>
 					<th>Actions</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -78,34 +80,38 @@
 					<td th:text="${emp.gender}"></td>
 					<td th:text="${emp.email}"></td>
 					<td th:text="${emp.salary}"></td>
+					<td th:text="${emp.roles}"></td>
 					<td>
 						<a th:href="@{/Admin/UpdateEmployeeForm/{id}(id=${emp.id})}"
 							class="btn btn-outline-primary">Update</a>
 						
-						<button data-toggle="modal" data-target="#myModal" 
-							class="btn btn-outline-danger">Delete</button>
+						<a   th:href="@{/Admin/DeleteEmployee/{id}(id=${emp.id})}"
+						class="btn btn-outline-danger">Delete</a>
+						
+						<!--<button data-toggle="modal" data-target="#myModal" 
+							class="btn btn-outline-danger">Delete</button>-->
 							
 							
 							<!--Confirmation dialog start-->
-	<div class="modal" id="myModal">
+	<!--<div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
         
-        <!-- Modal body -->
+        <!-- Modal body 
         <div class="modal-body">
           Are you sure want to delete this employee record?
         </div>
         
-        <!-- Modal footer -->
+        <!-- Modal footer 
         <div class="modal-footer">
-        
+        <h1 th:text="${emp.id}"></h1>
         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         <a class="btn btn-success"  th:href="@{/Admin/DeleteEmployee/{id}(id=${emp.id})}">Yes</a>
         </div>
         
       </div>
     </div>
-	</div>
+	</div>-->
 	<!--Confirmation dialog end-->
 					</td>
 				</tr>
