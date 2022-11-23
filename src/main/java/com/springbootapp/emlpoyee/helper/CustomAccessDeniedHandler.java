@@ -13,11 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import com.springbootapp.emlpoyee.aspects.GeneralLoggingAspect;
+import com.springbootapp.emlpoyee.aspects.LoggingAspect;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-	final private Logger LOG = LoggerFactory.getLogger(GeneralLoggingAspect.class);
+	final private Logger LOG = LoggerFactory.getLogger(LoggingAspect.class);
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,

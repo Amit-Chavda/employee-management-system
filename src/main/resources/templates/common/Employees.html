@@ -1,94 +1,96 @@
 <!DOCTYPE html>
 
 <head>
-	<title>Employee Management System</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Employee Management System</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <body>
-	<br>
-	<div class="container">
-		<div class="row justify-content-center">
-			<h1>List Employees</h1>
-		</div>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>List Employees</h1>
+    </div>
+
+    <a th:href="@{/Employees/CreateEmployeeForm}" class="btn btn-primary mb-3">Add Employee</a>
+    <a th:href="@{/Logout}" class="btn btn-danger mb-3 float-sm-right">Logout</a>
+    <table class=" table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th><a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=firstName&order='+${reverseOrder}}>First
+                Name</a></th>
+            <th>
+                <a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=lastName&order='+${reverseOrder}}>
+                    Last Name
+                </a>
+            </th>
+            <th>Department</th>
+            <th>Job Title</th>
+            <th>
+                <a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=gender&order='+${reverseOrder}}>
+                    Gender
+                </a>
+            </th>
+            <th>Email</th>
+            <th>
+                <a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=salary&order='+${reverseOrder}}>
+                    Salary
+                </a>
+            </th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emp: ${employees}">
+            <td th:text="${emp.firstName}"></td>
+            <td th:text="${emp.lastName}"></td>
+            <td th:text="${emp.department}"></td>
+            <td th:text="${emp.jobTitle}"></td>
+            <td th:text="${emp.gender}"></td>
+            <td th:text="${emp.email}"></td>
+            <td th:text="${emp.salary}"></td>
+            <td>
+                <a th:href="@{/Employees/UpdateEmployeeForm/{id}(id=${emp.id})}"
+                   class="btn btn-primary">Update</a>
+                <a th:href="@{/Employees/DeleteEmployee/{id}(id=${emp.id})}"
+                   class="btn bg-danger text-light">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 
-		<a th:href="@{/Employees/CreateEmployeeForm}" class="btn btn-primary mb-3">Add Employee</a>
-		<a th:href="@{/Logout}" class="btn btn-danger mb-3 float-sm-right">Logout</a>
-		<table class=" table table-striped table-bordered">
-			<thead class="table-dark">
-				<tr>
-					<th><a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=firstName&order='+${reverseOrder}}>First
-							Name</a></th>
-					<th>
-					<a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=lastName&order='+${reverseOrder}}>
-					Last Name
-					</a>
-					</th>
-					<th>Department</th>
-					<th>Job Title</th>
-					<th>
-					<a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=gender&order='+${reverseOrder}}>
-					Gender
-					</a>
-					</th>
-					<th>Email</th>
-					<th>
-					<a th:href=@{'/Employees/page/'+${currentPage}+'?sortBy=salary&order='+${reverseOrder}}>
-					Salary
-					</a>
-					</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="emp: ${employees}">
-					<td th:text="${emp.firstName}"></td>
-					<td th:text="${emp.lastName}"></td>
-					<td th:text="${emp.department}"></td>
-					<td th:text="${emp.jobTitle}"></td>
-					<td th:text="${emp.gender}"></td>
-					<td th:text="${emp.email}"></td>
-					<td th:text="${emp.salary}"></td>
-					<td>
-						<a th:href="@{/Employees/UpdateEmployeeForm/{id}(id=${emp.id})}"
-							class="btn btn-primary">Update</a>
-						<a th:href="@{/Employees/DeleteEmployee/{id}(id=${emp.id})}"
-							class="btn bg-danger text-light">Delete</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-
-		<div th:if="${totalPages>1}">
-			<div class="row col-sm-10 display-7">
-				<div class="col-sm-3 h4">
-					Total Rows: [[${totalItems}]]
-				</div>
-				<div class="col-sm-2 h4">
+    <div th:if="${totalPages>1}">
+        <div class="row col-sm-10 display-7">
+            <div class="col-sm-3 h4">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class="col-sm-2 h4">
 					<span th:each="i:${#numbers.sequence(1,totalPages)}">
-						<a th:if="${currentPage!=i}" th:href="@{' /Employees/page/' + (${i})+'?sortBy='+${sortBy} +' &order='+${order}}">[[${i}]]</a>
+						<a th:if="${currentPage!=i}"
+                           th:href="@{' /Employees/page/' + (${i})+'?sortBy='+${sortBy} +' &order='+${order}}">[[${i}]]</a>
 						<span th:unless="${currentPage !=i}">[[${i}]]</span>
 						</span>
-	</div>
-	
-	<div class="col-sm-1">
-		<a th:if="${currentPage<totalPages}" th:href="@{' /Employees/page/' + ${currentPage+1} +'?sortBy='+${sortBy} +'
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage<totalPages}" th:href="@{' /Employees/page/' + ${currentPage+1} +'?sortBy='+${sortBy} +'
 							&order='+${order}}"
-			class="btn btn-primary">Next</a>
+                   class="btn btn-primary">Next</a>
 
-		<a th:if="${currentPage==totalPages}" th:href="@{' /Employees/page/1'+'?sortBy='+${sortBy} +' &order='+${order}}" class="btn btn-primary">First</a>
-	</div>
-	<div class="col-sm-2">
-		<a th:if="${currentPage!=i}" th:href="@{' /Employees/page/' + (${totalPages})+'?sortBy='+${sortBy} +' &order='+${order}}" class="btn btn-primary">Last</a>
-	</div>
-	</div>
-	</div>
-	</div>
+                <a th:if="${currentPage==totalPages}"
+                   th:href="@{' /Employees/page/1'+'?sortBy='+${sortBy} +' &order='+${order}}" class="btn btn-primary">First</a>
+            </div>
+            <div class="col-sm-2">
+                <a th:if="${currentPage!=i}"
+                   th:href="@{' /Employees/page/' + (${totalPages})+'?sortBy='+${sortBy} +' &order='+${order}}"
+                   class="btn btn-primary">Last</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
